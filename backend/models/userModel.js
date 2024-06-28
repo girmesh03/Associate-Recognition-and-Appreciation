@@ -6,15 +6,11 @@ const UserSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: true,
-      minLength: [2, "First name must be at least 2 characters long"],
-      maxLength: [15, "First name must be at most 15 characters long"],
       trim: true,
     },
     lastName: {
       type: String,
       required: true,
-      minLength: [2, "Last name must be at least 2 characters long"],
-      maxLength: [15, "Last name must be at most 15 characters long"],
       trim: true,
     },
     department: {
@@ -30,16 +26,14 @@ const UserSchema = new mongoose.Schema(
       required: true,
       lowercase: true,
       unique: true,
-      maxLength: [50, "Email must be at most 50 characters long"],
     },
     password: {
       type: String,
       required: true,
-      minLength: [5, "Password must be at least 8 characters long"],
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
+      enum: ["user", "manager", "admin"],
       default: "user",
     },
     profilePicture: {
@@ -58,10 +52,11 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    // statistics: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "UserStatistics",
-    // },
+    recognitions: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Recognition" },
+    ],
+    nominations: [{ type: mongoose.Schema.Types.ObjectId, ref: "Nomination" }],
+    points: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
