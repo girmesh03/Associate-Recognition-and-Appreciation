@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  currentUser: JSON.parse(localStorage.getItem("currentUser")) || null,
   mode: localStorage.getItem("mode") || "light",
 };
 
@@ -14,12 +14,12 @@ export const authSlice = createSlice({
       localStorage.setItem("mode", state.mode);
     },
     setLogin: (state, action) => {
-      state.user = action.payload;
-      localStorage.setItem("user", JSON.stringify(action.payload));
+      state.currentUser = action.payload;
+      localStorage.setItem("currentUser", JSON.stringify(action.payload));
     },
     setLogout: (state) => {
-      state.user = null;
-      localStorage.removeItem("user");
+      state.currentUser = null;
+      localStorage.removeItem("currentUser");
     },
   },
 });
