@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch } from "react-redux";
+
 import {
   TextField,
   Button,
@@ -12,11 +13,12 @@ import {
   Stack,
   useTheme,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../context/features/auth/authSlice";
 import { makeRequest } from "../../api/makeRequest";
-import { login } from "../../context/features/auth/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -37,8 +39,7 @@ const Login = () => {
   const onSubmit = async (values) => {
     try {
       const response = await makeRequest.post("/auth/login", values);
-      console.log("resposne", response.data);
-      dispatch(login(response.data));
+      dispatch(setLogin(response.data));
       reset();
       navigate("/recognitions");
     } catch (error) {

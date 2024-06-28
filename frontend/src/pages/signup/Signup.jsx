@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
+
 import {
   TextField,
   Button,
@@ -19,11 +20,8 @@ import { OptionSelectField } from "../../components";
 import { departments, positions } from "../../utils/constants";
 
 import { makeRequest } from "../../api/makeRequest";
-import { useDispatch } from "react-redux";
-import { signup } from "../../appStates/features/auth/authSlice";
 
 const Signup = () => {
-  const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
@@ -41,9 +39,7 @@ const Signup = () => {
 
   const onSubmit = async (values) => {
     try {
-      const response = await makeRequest.post("/auth/signup", values);
-      console.log("resposne", response.data);
-      dispatch(signup(response.data));
+      await makeRequest.post("/auth/signup", values);
       reset();
       navigate("/login");
     } catch (error) {
